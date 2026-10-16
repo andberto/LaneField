@@ -1,0 +1,284 @@
+{
+  "representation": {
+    "source": "hd_mapping_bertogalli/figures/introduction.pdf",
+    "width": 2200,
+    "height": 1385,
+    "bytes": 767412,
+    "preview": "representation-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 907
+  },
+  "framework": {
+    "source": "hd_mapping_bertogalli/figures/Architecture.pdf",
+    "width": 2800,
+    "height": 1267,
+    "bytes": 406900,
+    "preview": "framework-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 652
+  },
+  "modulation-block": {
+    "source": "hd_mapping_bertogalli/figures/SPADE.pdf",
+    "width": 1800,
+    "height": 888,
+    "bytes": 39142,
+    "preview": "modulation-block-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 710
+  },
+  "attention-mechanism": {
+    "source": "hd_mapping_bertogalli/figures/new_attention.pdf",
+    "width": 2000,
+    "height": 1301,
+    "bytes": 589714,
+    "preview": "attention-mechanism-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 937
+  },
+  "qualitative-main": {
+    "source": "hd_mapping_bertogalli/figures/HD_results.pdf",
+    "width": 3400,
+    "height": 1004,
+    "bytes": 2902196,
+    "preview": "qualitative-main-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 425
+  },
+  "qualitative-crossing": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/qual_01.pdf",
+    "width": 2200,
+    "height": 2766,
+    "bytes": 3530500,
+    "preview": "qualitative-crossing-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 1810
+  },
+  "qualitative-intersection": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/qual_02.pdf",
+    "width": 2200,
+    "height": 2744,
+    "bytes": 2952206,
+    "preview": "qualitative-intersection-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 1796
+  },
+  "failure-roundabout": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/failure_01.pdf",
+    "width": 2200,
+    "height": 2824,
+    "bytes": 3662632,
+    "preview": "failure-roundabout-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 1848
+  },
+  "failure-crossing": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/failure_02.pdf",
+    "width": 2200,
+    "height": 2583,
+    "bytes": 2747946,
+    "preview": "failure-crossing-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 1691
+  },
+  "feature-analysis": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/modulation_01.pdf",
+    "width": 2200,
+    "height": 2576,
+    "bytes": 663742,
+    "preview": "feature-analysis-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 1686
+  },
+  "spread-map": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/HD_MAP.png",
+    "width": 1346,
+    "height": 872,
+    "bytes": 13646
+  },
+  "spread-025": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/0.25.png",
+    "width": 1346,
+    "height": 872,
+    "bytes": 45388
+  },
+  "spread-050": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/0.5.png",
+    "width": 1346,
+    "height": 872,
+    "bytes": 68476
+  },
+  "spread-075": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/0.75.png",
+    "width": 1346,
+    "height": 872,
+    "bytes": 76678
+  },
+  "spread-100": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1.0.png",
+    "width": 1346,
+    "height": 872,
+    "bytes": 78848
+  },
+  "attention-road-original": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/Orig.png",
+    "width": 872,
+    "height": 550,
+    "bytes": 29872
+  },
+  "attention-road-guided": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/Deformed.png",
+    "width": 872,
+    "height": 550,
+    "bytes": 36606
+  },
+  "attention-road-overlay": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/Orig_Deformed.png",
+    "width": 872,
+    "height": 550,
+    "bytes": 27198
+  },
+  "attention-intersection-original": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/intersection_orig.png",
+    "width": 756,
+    "height": 547,
+    "bytes": 44596
+  },
+  "attention-intersection-guided": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/intersection_deformed.png",
+    "width": 756,
+    "height": 547,
+    "bytes": 44848
+  },
+  "attention-intersection-overlay": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/intersection_Orig_Deform.png",
+    "width": 756,
+    "height": 547,
+    "bytes": 40254
+  },
+  "attention-uncertain-original": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1140_BEV_orig_variance.png",
+    "width": 745,
+    "height": 551,
+    "bytes": 20900
+  },
+  "attention-uncertain-guided": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1140_BEV_deform_variance.png",
+    "width": 745,
+    "height": 551,
+    "bytes": 20854
+  },
+  "attention-uncertain-reliable": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1140_BEV_lower_bound.png",
+    "width": 745,
+    "height": 551,
+    "bytes": 23000
+  },
+  "uncertainty-driveway-gt": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/78_edge_var_mean_gt.png",
+    "width": 950,
+    "height": 715,
+    "bytes": 548888,
+    "preview": "uncertainty-driveway-gt-preview.webp",
+    "preview_width": 950,
+    "preview_height": 715
+  },
+  "uncertainty-driveway-pred": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/78_edge_var_mean_pred.png",
+    "width": 950,
+    "height": 715,
+    "bytes": 529116,
+    "preview": "uncertainty-driveway-pred-preview.webp",
+    "preview_width": 950,
+    "preview_height": 715
+  },
+  "uncertainty-driveway-variance": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/78_high_variance.png",
+    "width": 950,
+    "height": 715,
+    "bytes": 517582,
+    "preview": "uncertainty-driveway-variance-preview.webp",
+    "preview_width": 950,
+    "preview_height": 715
+  },
+  "uncertainty-parking-gt": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1141_gt.png",
+    "width": 1090,
+    "height": 825,
+    "bytes": 635994,
+    "preview": "uncertainty-parking-gt-preview.webp",
+    "preview_width": 960,
+    "preview_height": 727
+  },
+  "uncertainty-parking-pred": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1141_pred.png",
+    "width": 1090,
+    "height": 825,
+    "bytes": 646238,
+    "preview": "uncertainty-parking-pred-preview.webp",
+    "preview_width": 960,
+    "preview_height": 727
+  },
+  "uncertainty-parking-variance": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/1141_variance.png",
+    "width": 1091,
+    "height": 825,
+    "bytes": 601254,
+    "preview": "uncertainty-parking-variance-preview.webp",
+    "preview_width": 960,
+    "preview_height": 726
+  },
+  "uncertainty-free-space-gt": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/90_gt.png",
+    "width": 950,
+    "height": 715,
+    "bytes": 582738,
+    "preview": "uncertainty-free-space-gt-preview.webp",
+    "preview_width": 950,
+    "preview_height": 715
+  },
+  "uncertainty-free-space-pred": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/90_pred.png",
+    "width": 950,
+    "height": 715,
+    "bytes": 516614,
+    "preview": "uncertainty-free-space-pred-preview.webp",
+    "preview_width": 950,
+    "preview_height": 715
+  },
+  "uncertainty-free-space-variance": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/90_variance.png",
+    "width": 950,
+    "height": 715,
+    "bytes": 505418,
+    "preview": "uncertainty-free-space-variance-preview.webp",
+    "preview_width": 950,
+    "preview_height": 715
+  },
+  "attention-alignment": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/angle_error_all_heads_mean.png",
+    "width": 4200,
+    "height": 1485,
+    "bytes": 203884,
+    "preview": "attention-alignment-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 509
+  },
+  "attention-anisotropy": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/anisotropy_all_heads_mean.png",
+    "width": 4200,
+    "height": 1485,
+    "bytes": 185186,
+    "preview": "attention-anisotropy-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 509
+  },
+  "attention-area": {
+    "source": "hd_mapoing_bertogalli_supplementary/figures/area_all_heads_mean.png",
+    "width": 4200,
+    "height": 1485,
+    "bytes": 190544,
+    "preview": "attention-area-preview.webp",
+    "preview_width": 1440,
+    "preview_height": 509
+  }
+}

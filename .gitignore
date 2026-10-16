@@ -1,0 +1,9 @@
+.DS_Store
+.openai/
+node_modules/
+*.zip
+__pycache__/
+qa/
+
+# Generated GitHub Pages artifact
+_site/
