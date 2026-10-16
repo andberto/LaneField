@@ -2,7 +2,7 @@
 
 **Accepted at WACV 2027 — IEEE/CVF Winter Conference on Applications of Computer Vision.**
 
-![Lane Field: a dense, BEV-aligned representation encoding lane proximity, local direction, and directional confidence.](dist/assets/media/figures/representation-preview.webp)
+![Lane Field framework architecture: Lane Field prediction, BEV feature modulation, and guided deformable attention.](dist/assets/media/figures/framework-preview.webp)
 
 ## Abstract
 
