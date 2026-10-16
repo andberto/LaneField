@@ -2,7 +2,10 @@
 
 **Accepted at WACV 2027 — IEEE/CVF Winter Conference on Applications of Computer Vision.**
 
-![Lane Field framework architecture: Lane Field prediction, BEV feature modulation, and guided deformable attention.](dist/assets/media/figures/framework-preview.webp)
+<p align="center">
+  <img src="dist/assets/media/figures/representation-preview.webp" alt="Lane Field representation: lane proximity, local direction, and directional confidence." width="49%" align="middle">
+  <img src="dist/assets/media/figures/framework-preview.webp" alt="Framework architecture: Lane Field prediction, BEV feature modulation, and guided deformable attention." width="49%" align="middle">
+</p>
 
 ## Abstract
 
