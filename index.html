@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Learning Lane-Structured Conditioning Fields for Online HD Mapping. Explore Lane Field, a geometric representation for online HD mapping. WACV 2027, Orlando, Florida.">
+  <meta property="og:title" content="Lane Field · WACV 2027">
+  <meta property="og:description" content="Learning Lane-Structured Conditioning Fields for Online HD Mapping. Videos, method, and results.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://andberto.github.io/LaneField/assets/media/hd-map-poster.jpg">
+  <meta name="citation_title" content="Learning Lane-Structured Conditioning Fields for Online HD Mapping">
+  <meta name="citation_author" content="Andrea Bertogalli">
+  <meta name="citation_author" content="Anthony Dell'Eva">
+  <meta name="citation_author" content="Marcello Ceresini">
+  <meta name="citation_author" content="Federico Pirazzoli">
+  <meta name="citation_author" content="Filippo D'Addeo">
+  <meta name="citation_author" content="Lorenzo Cipelli">
+  <meta name="citation_author" content="Nicola Marinello">
+  <meta name="citation_author" content="Massimo Bertozzi">
+  <meta name="citation_conference_title" content="IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)">
+  <meta name="citation_publication_date" content="2027">
+
+  <title>Lane Field — Learning Lane-Structured Conditioning Fields · WACV 2027</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <script src="field-lab.js" defer></script>
+  <meta property="og:url" content="https://andberto.github.io/LaneField/">
+  <link rel="canonical" href="https://andberto.github.io/LaneField/">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-shell">
+      <a class="nav-title" href="#top">WACV 2027 <span>Orlando, Florida</span></a>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a><a href="#overview">Overview</a><a href="#method">Method</a><a href="#visualizations">Visualizations</a><a href="#results">Results</a><a href="#resources">Resources</a><a href="#contact">Contact</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button>
+    </div>
+    <div class="mobile-nav" id="mobile-nav" hidden>
+      <a href="#abstract">Abstract</a><a href="#overview">Overview</a><a href="#method">Method</a><a href="#visualizations">Visualizations</a><a href="#results">Results</a><a href="#resources">Resources</a><a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header class="paper-header" id="top">
+    <div class="container">
+      <h1 id="paper-title">Learning Lane-Structured Conditioning Fields<br class="title-break"> for Online HD Mapping</h1>
+      <div class="authors" aria-label="Paper authors">
+        <span class="author">Andrea Bertogalli<sup>1</sup></span>
+        <span class="author">Anthony Dell’Eva<sup>3</sup></span>
+        <span class="author">Marcello Ceresini<sup>1</sup></span>
+        <span class="author">Federico Pirazzoli<sup>1</sup></span>
+        <span class="author">Filippo D’Addeo<sup>2</sup></span>
+        <span class="author">Lorenzo Cipelli<sup>1</sup></span>
+        <span class="author">Nicola Marinello<sup>3</sup></span>
+        <span class="author">Massimo Bertozzi<sup>1</sup></span>
+      </div>
+      <ul class="affiliations" aria-label="Author affiliations">
+        <li id="affiliation-parma"><sup>1</sup> University of Parma</li>
+        <li id="affiliation-bologna"><sup>2</sup> University of Bologna</li>
+        <li id="affiliation-ambarella"><sup>3</sup> VisLab, an Ambarella Inc. company</li>
+      </ul>
+      <div class="venue">
+        <p><a href="https://wacv.thecvf.com/Conferences/2027" target="_blank" rel="noopener">IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV 2027)</strong></a></p>
+        <p class="venue-location">Orlando, Florida, USA &nbsp;·&nbsp; January 4–8, 2027</p>
+      </div>
+      <div class="institution-logos" aria-label="Research institutions">
+        <a href="https://www.unipr.it/" target="_blank" rel="noopener"><img class="unipr-logo" src="assets/logos/university-of-parma.svg" alt="University of Parma" width="190" height="61"></a>
+        <a href="https://www.unibo.it/" target="_blank" rel="noopener"><img class="unibo-logo" src="assets/logos/university-of-bologna.png" alt="University of Bologna" width="350" height="254"></a>
+        <a href="https://vislab.it/" target="_blank" rel="noopener"><img class="vislab-logo" src="assets/logos/vislab.png" alt="VisLab, an Ambarella Inc. company" width="180" height="36"></a>
+        <a href="https://www.ambarella.com/" target="_blank" rel="noopener"><img class="ambarella-logo" src="assets/logos/ambarella.png" alt="Ambarella — AI envisioned" width="110" height="67"></a>
+      </div>
+      <div class="paper-links" aria-label="Paper resources">
+
+
+        <a class="resource-button primary" href="#gaussian-spread">Explore the field <span aria-hidden="true">↗</span></a>
+        <a class="resource-button" href="#overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Videos</a>
+        <a class="resource-button" href="#citation"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5H3v5h4V5Zm0 5c0 3-1 5-4 5M17 5h-4v5h4V5Zm0 5c0 3-1 5-4 5"/></svg>BibTeX</a>
+        <span class="resource-button unavailable"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 5-4 5 4 5m8-10 4 5-4 5M12 3 8 17"/></svg>Code <small>coming soon</small></span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="paper-section abstract-section" id="abstract" aria-labelledby="abstract-title">
+      <div class="container reading-width">
+        <h2 id="abstract-title">Abstract</h2>
+        <p class="abstract-text">High-definition maps provide critical structural information for downstream autonomous driving tasks. Recent methods increasingly rely on external priors to improve prediction accuracy and robustness. Yet, existing prior representations expose a trade-off: dense rasters are easy to integrate but ignore certain map geometric properties, while sparse vectors preserve geometric structure but require dedicated encoders and are difficult to plug into existing architectures. Moreover, external priors can be inaccurate, costly to acquire, or difficult to maintain, motivating a structural representation that can provide geometric guidance while remaining learnable and broadly applicable. We address this limitation with the Lane Field, a dense BEV-aligned geometric representation that encodes local lane structure at each spatial location and can be either predicted from onboard observations or constructed from external map priors. Building on this representation, we introduce a plug-and-play framework that enhances online HD mapping through two complementary mechanisms: BEV feature modulation, which injects lane-structured cues into latent BEV features, and deformable attention guidance, which steers query sampling toward the underlying lane geometry. We primarily evaluate our method on OpenLane-V2, showing that conditioning BEV features and guiding deformable attention with local lane geometry enables our framework to consistently improve existing methods and achieve state-of-the-art performance on lane segment perception.</p>
+      </div>
+    </section>
+
+    <section class="paper-section" id="overview" aria-labelledby="overview-title">
+      <div class="container">
+        <h2 id="overview-title">Overview</h2>
+        <p class="section-intro">A dense field for <strong>proximity, orientation and confidence</strong>. Lane Field turns local lane geometry into a conditioning signal for BEV features and deformable attention.</p>
+        <div class="overview-media">
+        <figure class="paper-figure representation-figure" ><a class="figure-zoom" href="assets/media/figures/representation.webp" data-zoom data-title="Dense and geometric Lane Field representation" target="_blank" rel="noopener" aria-label="Enlarge: Dense and geometric Lane Field representation"><img src="assets/media/figures/representation-preview.webp" alt="Comparison of a dense raster map, sparse vector geometry, and the Lane Field channels for proximity, local direction, and confidence." width="1440" height="907" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Figure 1.</strong> Lane Field combines the geometric meaning of vectorized maps with a dense, BEV-aligned spatial structure.</figcaption></figure>
+        <figure class="video-figure" id="demos">
+          <div class="video-frame"><video id="research-video" controls playsinline preload="none" poster="assets/media/hd-map-poster.jpg" aria-label="HD map reconstruction from surround-view camera observations, with predicted Lane Fields and vectorized map geometry"><source src="assets/media/hd-map.mp4" type="video/mp4"><p>Your browser does not support video. <a href="assets/media/hd-map.mp4">Download the HD map demonstration</a>.</p></video></div>
+          <figcaption><strong>Video 1.</strong> Online HD map reconstruction on OpenLane-V2. Surround-view camera observations are shown alongside the predicted Lane Field and vectorized map geometry.</figcaption>
+          <div class="media-links"><span>0:59 &nbsp;·&nbsp; No audio</span><a href="assets/media/hd-map.mp4" download>Download video <span aria-hidden="true">↓</span></a></div>
+          <p class="video-error" role="status" hidden></p>
+        </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper-section" id="method" aria-labelledby="method-title">
+      <div class="container">
+        <h2 id="method-title">Method</h2>
+        <p class="section-intro">Camera observations → BEV features → <strong>Lane Field prediction</strong> → feature modulation and guided attention. Vector annotations provide analytic supervision during training; external map priors can supply the same representation.</p>
+        <figure class="paper-figure architecture" ><a class="figure-zoom" href="assets/media/figures/framework.webp" data-zoom data-title="Framework overview" target="_blank" rel="noopener" aria-label="Enlarge: Framework overview"><img src="assets/media/figures/framework-preview.webp" alt="Camera observations are encoded into BEV features. A prediction head estimates the Lane Field, which modulates BEV features and guides deformable attention in the decoder." width="1440" height="652" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Figure 2.</strong> Overview of the framework: <span class="panel-reference">(a)</span> Lane Field prediction, supervised with fields constructed from vector annotations; <span class="panel-reference">(b)</span> BEV feature modulation; <span class="panel-reference">(c)</span> guided deformable attention.</figcaption></figure>
+        <details class="analysis-details method-detail"><summary>Inside the framework <span>BEV modulation &amp; attention guidance</span></summary>
+        <div class="method-figures"><figure class="paper-figure " ><a class="figure-zoom" href="assets/media/figures/modulation-block.webp" data-zoom data-title="BEV feature modulation" target="_blank" rel="noopener" aria-label="Enlarge: BEV feature modulation"><img src="assets/media/figures/modulation-block-preview.webp" alt="SPADE-like modulation predicts spatially varying gamma and beta parameters from the Lane Field and applies them inside a residual BEV refinement block." width="1440" height="710" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Figure 3. BEV feature modulation.</strong> The Lane Field predicts spatially varying affine parameters γ and β. A residual block uses these parameters to refine the BEV features.</figcaption></figure><figure class="paper-figure " ><a class="figure-zoom" href="assets/media/figures/attention-mechanism.webp" data-zoom data-title="Deformable attention guidance" target="_blank" rel="noopener" aria-label="Enlarge: Deformable attention guidance"><img src="assets/media/figures/attention-mechanism-preview.webp" alt="Lane Field guided attention preserves the normal offset and stretches the tangential offset along the local lane direction when the three guidance gates are active." width="1440" height="937" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Figure 4. Deformable attention guidance.</strong> Sampling offsets stretch along the lane direction. Directional confidence, uncertainty, and a learnable per-head gate control the strength of the guidance.</figcaption></figure></div>
+        </details>
+        <h3 class="subsection-title">Lane Field prediction</h3>
+        <p>The representation describes <strong>proximity</strong>, <strong>local lane direction</strong>, and <strong>directional confidence</strong> across the BEV grid. The following video shows predicted fields across driving scenes.</p>
+        <figure class="video-figure field-video-figure">
+          <div class="video-frame"><video id="field-video" controls playsinline preload="none" poster="assets/media/field-poster.jpg" aria-label="Lane Field prediction across driving scenes, showing dense geometric fields alongside camera observations and the local map"><source src="assets/media/field-prediction.mp4" type="video/mp4"><p>Your browser does not support video. <a href="assets/media/field-prediction.mp4">Download the Lane Field demonstration</a>.</p></video></div>
+          <figcaption><strong>Video 2.</strong> Lane Field predictions across driving scenes. The visualizations show dense geometric structure in relation to image observations and the local road map.</figcaption>
+          <div class="media-links"><span>3:56 &nbsp;·&nbsp; No audio</span><a href="assets/media/field-prediction.mp4" download>Download video <span aria-hidden="true">↓</span></a></div>
+          <p class="video-error" role="status" hidden></p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="paper-section" id="visualizations" aria-labelledby="visualizations-title">
+      <div class="container">
+        <h2 id="visualizations-title">Visualizations</h2>
+        <p class="section-intro">Build the representation interactively, then inspect the paper’s maps, attention patterns and uncertainty estimates. Select any research figure to enlarge it.</p>
+        <nav class="results-nav" aria-label="Visual analyses"><a href="#gaussian-spread">Build the field</a><a href="#qualitative-results">Map predictions</a><a href="#attention-analysis">Attention guidance</a><a href="#uncertainty-analysis">Uncertainty</a></nav>
+        <h3 class="subsection-title" id="gaussian-spread">From lane geometry to a dense field</h3>
+        <p>The Lane Field is constructed analytically from vector map annotations. Each lane segment contributes both a smooth spatial weight and an unoriented direction to every location <em>p</em> in the bird’s-eye-view grid.</p>
+        <div class="field-lab" id="field-lab" aria-labelledby="lab-title" hidden>
+          <div class="lab-heading">
+            <div><span class="lab-eyebrow">Interactive construction</span><h4 id="lab-title">Build the field, one point at a time.</h4></div>
+            <span class="lab-badge">Analytic demo</span>
+          </div>
+          <div class="lab-steps" role="tablist" aria-label="Lane Field construction steps">
+            <button id="lab-tab-0" type="button" role="tab" aria-selected="true" aria-controls="lab-panel-0"><span>01</span> Geometry</button>
+            <button id="lab-tab-1" type="button" role="tab" aria-selected="false" aria-controls="lab-panel-1" tabindex="-1"><span>02</span> Integrate</button>
+            <button id="lab-tab-2" type="button" role="tab" aria-selected="false" aria-controls="lab-panel-2" tabindex="-1"><span>03</span> Accumulate</button>
+            <button id="lab-tab-3" type="button" role="tab" aria-selected="false" aria-controls="lab-panel-3" tabindex="-1"><span>04</span> Confidence</button>
+          </div>
+          <div class="lab-body">
+            <div class="lab-map">
+              <fieldset class="lab-scenes"><legend class="sr-only">Example lane geometry</legend><div class="explorer-options">
+                <label><input type="radio" name="lab-scene" value="straight" checked><span>Straight road</span></label>
+                <label><input type="radio" name="lab-scene" value="bend"><span>Bend</span></label>
+                <label><input type="radio" name="lab-scene" value="crossing"><span>Crossing</span></label>
+              </div></fieldset>
+              <div class="segment-toolbar"><fieldset class="segment-picker"><legend>Segment</legend><div id="segment-options" class="explorer-options"></div></fieldset><label class="segment-enabled"><input id="segment-enabled" type="checkbox" checked> In total field</label></div>
+              <canvas id="field-canvas" width="560" height="360" tabindex="0" role="group" aria-label="Interactive bird’s-eye-view map. Drag point p, a segment, or its endpoints. Arrow keys move the selected map target by half a metre." aria-describedby="probe-instructions">Use a browser with canvas support to explore the field. The complete equations are available below.</canvas>
+              <div class="lab-map-caption"><output id="probe-position">p = (2.0, 2.0) m</output><button type="button" id="probe-reset">Reset point ↺</button></div>
+              <p id="probe-instructions" class="lab-hint">Drag <strong>p</strong>, any segment or its endpoints A and B. In Integrate, drag q(t) too.</p>
+              <div class="segment-controls">
+                <div><label class="kernel-label" for="segment-angle">Angle θ <output id="segment-angle-value">0°</output></label><input class="lab-range" id="segment-angle" type="range" min="-180" max="180" step="1" value="0"></div>
+                <div><label class="kernel-label" for="segment-length">Length ℓ <output id="segment-length-value">20.0 m</output></label><input class="lab-range" id="segment-length" type="range" min="1" max="24" step="0.1" value="20"></div>
+              </div>
+              <output id="segment-points" class="segment-points"></output>
+              <div class="segment-actions"><span id="map-target-hint">Arrow keys: point p · Tab switches target</span><button type="button" id="geometry-reset">Reset geometry ↺</button></div>
+              <p id="field-legend" class="lab-legend">Segments &amp; lane boundaries</p>
+            </div>
+            <div class="lab-explanation">
+              <section id="lab-panel-0" role="tabpanel" aria-labelledby="lab-tab-0" tabindex="0">
+                <h5>Start with a centerline.</h5>
+                <p>Split the lane into finite segments. Each has endpoints A<sub>i</sub>, B<sub>i</sub> and a unit tangent t̂<sub>i</sub>. The point <em>p</em> is one cell of the BEV grid.</p>
+                <div class="lab-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="The unit tangent is B i minus A i divided by the segment length."><mrow><msub><mover><mi>t</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>−</mo><msub><mi>A</mi><mi>i</mi></msub></mrow><msub><mi>ℓ</mi><mi>i</mi></msub></mfrac></mrow></math></div>
+                <p class="lab-takeaway">A sparse line becomes a dense signal: every segment will contribute to every grid cell.</p>
+                <p class="lab-small">Select a segment on the map or above it. Drag its handles or use the angle and length sliders. Shared endpoints keep a bend connected.</p>
+              </section>
+              <section id="lab-panel-1" role="tabpanel" aria-labelledby="lab-tab-1" tabindex="0" hidden>
+                <h5>Integrate along the whole segment.</h5>
+                <p>Explore <strong data-selected-segment>S1</strong>: move q(t) from A to B. Its Gaussian contribution depends on the distance to <em>p</em>. The shaded area, multiplied by the segment length, gives I<sub>i</sub>(<em>p</em>).</p>
+                <div class="lab-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="I i at p is segment length times the integral from zero to one of exp minus squared distance from p to q i of t over two sigma i squared, dt."><mrow><msub><mi>I</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><msub><mi>ℓ</mi><mi>i</mi></msub><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><msup><mi>e</mi><mrow><mo>−</mo><mfrac><msup><mrow><mo>‖</mo><mi>p</mi><mo>−</mo><msub><mi>q</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>‖</mo></mrow><mn>2</mn></msup><mrow><mn>2</mn><msubsup><mi>σ</mi><mi>i</mi><mn>2</mn></msubsup></mrow></mfrac></mrow></msup><mi mathvariant="normal">dt</mi></mrow></math></div>
+                <svg class="kernel-chart" viewBox="-10 0 300 86" role="img" aria-label="Gaussian contribution along the selected segment. Shaded area is the integral before multiplication by segment length."><path id="kernel-area" fill="#dbeaf6"/><path id="kernel-curve" fill="none" stroke="#266ba5" stroke-width="2"/><path d="M0 66H280" stroke="#abbfce"/><line id="kernel-marker" y1="3" y2="66" stroke="#b96837" stroke-dasharray="3 3"/><g fill="#6b7f90" font-size="10"><text x="0" y="82">A · t = 0</text><text x="235" y="82">B · t = 1</text></g></svg>
+                <label class="kernel-label" for="kernel-t">Position t <output id="kernel-t-value">0.50</output></label><input class="lab-range" id="kernel-t" type="range" min="0" max="1" step="0.01" value="0.5">
+                <div class="kernel-readout"><span>Gaussian at q(t) <output id="kernel-value">0</output></span><span>Selected integral I<sub>i</sub>(p) <output id="integral-value">0</output></span></div>
+                <p class="lab-small">The curve follows the selected segment. “In total field” controls whether it contributes to the five outputs below.</p>
+              </section>
+              <section id="lab-panel-2" role="tabpanel" aria-labelledby="lab-tab-2" tabindex="0" hidden>
+                <h5>Add support. Preserve orientation.</h5>
+                <p>Sum segment weights for proximity <em>P</em>. Weight each tangent’s outer product for the tensor <strong>M</strong>. Reversing a tangent gives the same tensor.</p>
+                <div class="lab-equation lab-sums"><span>P = ∑<sub>i</sub> I<sub>i</sub>(p)</span><span>M = ∑<sub>i</sub> I<sub>i</sub>(p) t̂<sub>i</sub>t̂<sub>i</sub><sup>⊤</sup></span></div>
+                <div data-contributions aria-label="Segment contributions at p"></div>
+                <div class="tensor-readout"><span>M(p) =</span><div class="tensor-matrix"><output data-raw="xx">0</output><output data-raw="xy">0</output><output data-raw="xy">0</output><output data-raw="yy">0</output></div><span>P = <output data-raw="proximity">0</output></span></div>
+                <p class="lab-small">Select a contribution to inspect its segment. Toggle “In total field” to see what changes when that segment is removed.</p>
+              </section>
+              <section id="lab-panel-3" role="tabpanel" aria-labelledby="lab-tab-3" tabindex="0" hidden>
+                <h5>Measure agreement between axes.</h5>
+                <p>The eigenvalue gap measures how strongly one axis dominates. Equal orthogonal contributions make M isotropic and confidence approach zero.</p>
+                <div class="lab-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="C equals lambda one minus lambda two over lambda one plus lambda two."><mrow><mi>C</mi><mo>=</mo><mfrac><mrow><msub><mi>λ</mi><mn>1</mn></msub><mo>−</mo><msub><mi>λ</mi><mn>2</mn></msub></mrow><mrow><msub><mi>λ</mi><mn>1</mn></msub><mo>+</mo><msub><mi>λ</mi><mn>2</mn></msub></mrow></mfrac></mrow></math></div>
+                <div class="eigen-readout"><span>λ₁ <output data-lambda="0">0</output></span><span>λ₂ <output data-lambda="1">0</output></span><span>C (raw) <output data-raw="confidence">0</output></span></div>
+                <p class="lab-takeaway" id="confidence-insight"></p>
+                <p class="lab-small">Select <strong>Crossing</strong>, then move p away from its center: one axis gradually takes over.</p>
+              </section>
+            </div>
+          </div>
+          <div class="lab-output"><div class="lab-output-label"><strong>R(p)</strong><span>Active segments · 5 channels</span></div><div class="channel-strip">
+            <div data-channel><span>M<sub>xx</sub></span><output>0</output><span class="channel-track"><span class="channel-fill"></span></span></div>
+            <div data-channel><span>M<sub>xy</sub></span><output>0</output><span class="channel-track"><span class="channel-fill"></span></span></div>
+            <div data-channel><span>M<sub>yy</sub></span><output>0</output><span class="channel-track"><span class="channel-fill"></span></span></div>
+            <div data-channel><span>P</span><output>0</output><span class="channel-track"><span class="channel-fill"></span></span></div>
+            <div data-channel><span>C</span><output>0</output><span class="channel-track"><span class="channel-fill"></span></span></div>
+          </div></div>
+          <p class="lab-footnote">Illustrative geometry · σ = 1.75 m, lane width = 3.5 m. Outputs use the paper’s analytic integral and supplementary target normalization and proximity mask.</p>
+          <p id="lab-status" class="sr-only" role="status" aria-live="polite"></p>
+        </div>
+        <details class="analysis-details construction-derivation"><summary>Equations &amp; target normalization <span>Paper §3.2 · Supplementary: derivation &amp; implementation</span></summary>
+        <div class="field-construction">
+          <div class="construction-step">
+            <h4>1. Spread each lane segment over the grid</h4>
+            <p>Split each centerline into straight segments. Segment <em>i</em> has endpoints A<sub>i</sub> and B<sub>i</sub>, length ℓ<sub>i</sub>, unit tangent t̂<sub>i</sub> = (B<sub>i</sub> − A<sub>i</sub>) / ℓ<sub>i</sub>, and average lane width w̄<sub>i</sub>. Its Gaussian spread is σ<sub>i</sub> = <em>f</em> · w̄<sub>i</sub>.</p>
+            <div class="equation-scroll" role="region" aria-label="Gaussian segment contribution equation" tabindex="0">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="I i of p equals segment length ell i times the integral from zero to one of exp of minus the squared distance from p to A i plus t times B i minus A i, divided by two sigma i squared, with respect to t.">
+                <mrow>
+                  <msub><mi>I</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><msub><mi>ℓ</mi><mi>i</mi></msub>
+                  <msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup>
+                  <mi mathvariant="normal">exp</mi><mo>⁡</mo><mrow><mo>(</mo><mo>−</mo><mfrac>
+                    <msup><mrow><mo>‖</mo><mi>p</mi><mo>−</mo><msub><mi>A</mi><mi>i</mi></msub><mo>−</mo><mi>t</mi><mo>(</mo><msub><mi>B</mi><mi>i</mi></msub><mo>−</mo><msub><mi>A</mi><mi>i</mi></msub><mo>)</mo><mo>‖</mo></mrow><mn>2</mn></msup>
+                    <mrow><mn>2</mn><msubsup><mi>σ</mi><mi>i</mi><mn>2</mn></msubsup></mrow>
+                  </mfrac><mo>)</mo></mrow><mspace width="0.2em"/><mi mathvariant="normal">d</mi><mi>t</mi>
+                </mrow>
+              </math>
+            </div>
+            <p>Here, <em>t</em> moves from one endpoint to the other. Integrating the Gaussian along the finite segment gives a smooth contribution I<sub>i</sub>(<em>p</em>): nearby locations receive more support, and distant locations receive less. The factor <em>f</em> controls how broadly that support spreads.</p>
+          </div>
+          <div class="construction-step">
+            <h4>2. Accumulate direction and proximity</h4>
+            <p>At each grid location, sum the contributions of all segments. Weighting each tangent’s outer product produces a symmetric 2 × 2 directional tensor <strong>M</strong>; summing the weights alone gives the proximity <em>P</em>.</p>
+            <div class="equation-pair">
+              <div class="equation-scroll" role="region" aria-label="Directional tensor equation" tabindex="0">
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="M of p equals the sum over segments i of I i of p times unit tangent t i times its transpose.">
+                  <mrow><mi mathvariant="bold">M</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>I</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo><mspace width="0.2em"/><msub><mover accent="true"><mi mathvariant="bold">t</mi><mo>^</mo></mover><mi>i</mi></msub><msubsup><mover accent="true"><mi mathvariant="bold">t</mi><mo>^</mo></mover><mi>i</mi><mo>⊤</mo></msubsup></mrow>
+                </math>
+              </div>
+              <div class="equation-scroll" role="region" aria-label="Proximity equation" tabindex="0">
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="P of p equals the sum over all segments i of I i of p.">
+                  <mrow><mi>P</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>I</mi><mi>i</mi></msub><mo>(</mo><mi>p</mi><mo>)</mo></mrow>
+                </math>
+              </div>
+            </div>
+            <p>The outer product is unchanged when a tangent is reversed, so the tensor describes a lane’s axis rather than its travel direction. Proximity measures how strongly nearby lane geometry supports that location.</p>
+          </div>
+          <div class="construction-step">
+            <h4>3. Measure directional agreement</h4>
+            <p>Let λ<sub>1</sub> ≥ λ<sub>2</sub> be the eigenvalues of <strong>M</strong>(<em>p</em>). Their relative difference defines the direction confidence <em>C</em>: it is high when a single axis dominates and lower when competing orientations contribute, as at an intersection.</p>
+            <div class="equation-scroll" role="region" aria-label="Direction confidence equation" tabindex="0">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="C of p equals lambda one of p minus lambda two of p, divided by lambda one of p plus lambda two of p.">
+                <mrow><mi>C</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msub><mi>λ</mi><mn>1</mn></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>−</mo><msub><mi>λ</mi><mn>2</mn></msub><mo>(</mo><mi>p</mi><mo>)</mo></mrow><mrow><msub><mi>λ</mi><mn>1</mn></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>+</mo><msub><mi>λ</mi><mn>2</mn></msub><mo>(</mo><mi>p</mi><mo>)</mo></mrow></mfrac></mrow>
+              </math>
+            </div>
+            <p>The resulting representation has five channels at each BEV location: three tensor entries, proximity, and directional confidence.</p>
+            <div class="equation-scroll field-vector" role="region" aria-label="Five-channel Lane Field equation" tabindex="0">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="The Lane Field R at p contains M xx of p, M xy of p, M yy of p, P of p, and C of p.">
+                <mrow><mi mathvariant="script">R</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><mo>[</mo><msub><mi>M</mi><mrow><mi>x</mi><mi>x</mi></mrow></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>,</mo><msub><mi>M</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>,</mo><msub><mi>M</mi><mrow><mi>y</mi><mi>y</mi></mrow></msub><mo>(</mo><mi>p</mi><mo>)</mo><mo>,</mo><mi>P</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>,</mo><mi>C</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>]</mo></mrow>
+              </math>
+            </div>
+          </div>
+          <p class="construction-note">The demo evaluates the closed-form integral from the supplement: I<sub>i</sub>(p) = σ<sub>i</sub>√(π/2) exp(−d<sub>⊥,i</sub>² / 2σ<sub>i</sub>²) [erf(u<sub>1,i</sub>) − erf(u<sub>0,i</sub>)], where a<sub>i</sub> = (p − A<sub>i</sub>)<sup>⊤</sup>t̂<sub>i</sub>, u<sub>0,i</sub> = −a<sub>i</sub> / (√2 σ<sub>i</sub>) and u<sub>1,i</sub> = (ℓ<sub>i</sub> − a<sub>i</sub>) / (√2 σ<sub>i</sub>). The projection onto the supporting line is not clamped; the integration bounds account for finite endpoints.</p>
+          <p class="construction-note">For training targets, P<sup>gt</sup> = P / (P + 1) and m = sigmoid(20(P<sup>gt</sup> − 0.3)). The output tensor is M<sup>gt</sup> = M / (tr(M) + ε) · m, and C<sup>gt</sup> = C · m. The five live outputs above use these transformations; the matrix and eigenvalue readouts show the raw accumulations. The implementation also uses a minimum Gaussian spread and numerical stabilization. These constructed fields supervise the prediction head and can also encode external map priors.</p>
+        </div>
+        </details>
+        <h4 class="spread-comparison-title">How wide should the field spread?</h4>
+        <p>The demo keeps σ fixed. In the paper, σ<sub>i</sub> = <em>f</em> · w̄<sub>i</sub> adapts it to lane width. Compare the actual ground-truth fields below: increasing <em>f</em> broadens support. <strong>The paper uses f = 0.50.</strong></p>
+<div class="visual-explorer" data-explorer="spread" ><fieldset class="explorer-controls" hidden><legend>Spread factor f</legend><div class="explorer-options"><label><input type="radio" name="spread" value="025" aria-controls="spread-025" ><span>0.25</span></label><label><input type="radio" name="spread" value="050" aria-controls="spread-050" checked><span>0.50 (paper setting)</span></label><label><input type="radio" name="spread" value="075" aria-controls="spread-075" ><span>0.75</span></label><label><input type="radio" name="spread" value="100" aria-controls="spread-100" ><span>1.00</span></label></div></fieldset><figure class="explorer-panel" id="spread-025" data-panel="025"><div class="panel-grid panel-grid--two"><div class="visual-panel"><p class="panel-label">Vector map</p><a class="figure-zoom" href="assets/media/figures/spread-map.webp" data-zoom data-title="Vector map" target="_blank" rel="noopener" aria-label="Enlarge: Vector map"><img src="assets/media/figures/spread-map.webp" alt="Vector map annotations for the intersection used to construct the ground-truth Lane Field." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Lane Field · f = 0.25</p><a class="figure-zoom" href="assets/media/figures/spread-025.webp" data-zoom data-title="Lane Field · f = 0.25" target="_blank" rel="noopener" aria-label="Enlarge: Lane Field · f = 0.25"><img src="assets/media/figures/spread-025.webp" alt="Ground-truth Lane Field for the same intersection with Gaussian spread factor 0.25." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>f = 0.25.</strong> Narrow, localized support around the centerlines. The Gaussian weight at the lane edge is approximately <strong>13%</strong>, following exp(−1 / (8f²)). These weights describe the field construction, not detection accuracy.</figcaption></figure><figure class="explorer-panel" id="spread-050" data-panel="050"><div class="panel-grid panel-grid--two"><div class="visual-panel"><p class="panel-label">Vector map</p><a class="figure-zoom" href="assets/media/figures/spread-map.webp" data-zoom data-title="Vector map" target="_blank" rel="noopener" aria-label="Enlarge: Vector map"><img src="assets/media/figures/spread-map.webp" alt="Vector map annotations for the intersection used to construct the ground-truth Lane Field." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Lane Field · f = 0.50</p><a class="figure-zoom" href="assets/media/figures/spread-050.webp" data-zoom data-title="Lane Field · f = 0.50" target="_blank" rel="noopener" aria-label="Enlarge: Lane Field · f = 0.50"><img src="assets/media/figures/spread-050.webp" alt="Ground-truth Lane Field for the same intersection with Gaussian spread factor 0.50." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>f = 0.50.</strong> A balance between localized support and spatial coverage. The Gaussian weight at the lane edge is approximately <strong>61%</strong>, following exp(−1 / (8f²)). These weights describe the field construction, not detection accuracy.</figcaption></figure><figure class="explorer-panel" id="spread-075" data-panel="075"><div class="panel-grid panel-grid--two"><div class="visual-panel"><p class="panel-label">Vector map</p><a class="figure-zoom" href="assets/media/figures/spread-map.webp" data-zoom data-title="Vector map" target="_blank" rel="noopener" aria-label="Enlarge: Vector map"><img src="assets/media/figures/spread-map.webp" alt="Vector map annotations for the intersection used to construct the ground-truth Lane Field." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Lane Field · f = 0.75</p><a class="figure-zoom" href="assets/media/figures/spread-075.webp" data-zoom data-title="Lane Field · f = 0.75" target="_blank" rel="noopener" aria-label="Enlarge: Lane Field · f = 0.75"><img src="assets/media/figures/spread-075.webp" alt="Ground-truth Lane Field for the same intersection with Gaussian spread factor 0.75." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>f = 0.75.</strong> Broader support extends farther from the centerlines. The Gaussian weight at the lane edge is approximately <strong>80%</strong>, following exp(−1 / (8f²)). These weights describe the field construction, not detection accuracy.</figcaption></figure><figure class="explorer-panel" id="spread-100" data-panel="100"><div class="panel-grid panel-grid--two"><div class="visual-panel"><p class="panel-label">Vector map</p><a class="figure-zoom" href="assets/media/figures/spread-map.webp" data-zoom data-title="Vector map" target="_blank" rel="noopener" aria-label="Enlarge: Vector map"><img src="assets/media/figures/spread-map.webp" alt="Vector map annotations for the intersection used to construct the ground-truth Lane Field." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Lane Field · f = 1.00</p><a class="figure-zoom" href="assets/media/figures/spread-100.webp" data-zoom data-title="Lane Field · f = 1.00" target="_blank" rel="noopener" aria-label="Enlarge: Lane Field · f = 1.00"><img src="assets/media/figures/spread-100.webp" alt="Ground-truth Lane Field for the same intersection with Gaussian spread factor 1.00." width="1346" height="872" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>f = 1.00.</strong> The broadest support among the provided settings. The Gaussian weight at the lane edge is approximately <strong>88%</strong>, following exp(−1 / (8f²)). These weights describe the field construction, not detection accuracy.</figcaption></figure><p class="explorer-status sr-only" role="status"></p></div>
+        <h3 class="subsection-title" id="qualitative-results">Qualitative map predictions</h3>
+<figure class="paper-figure " data-media-slot="qualitative-comparison"><a class="figure-zoom" href="assets/media/figures/qualitative-main.webp" data-zoom data-title="Qualitative results on OpenLane-V2" target="_blank" rel="noopener" aria-label="Enlarge: Qualitative results on OpenLane-V2"><img src="assets/media/figures/qualitative-main-preview.webp" alt="Surround-view camera images with reprojected map predictions, followed by ground truth, LaneSegNet baseline, and Lane Field enhanced BEV maps. Annotations mark hallucinated, missing, and incorrect baseline elements." width="1440" height="425" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Figure 5.</strong> Predictions on OpenLane-V2. Camera-view projections and BEV comparisons show the ground truth, LaneSegNet baseline, and our enhanced variant. Lane Field helps preserve the lane layout and reduces the errors highlighted in the figure.</figcaption></figure><details class="analysis-details"><summary>More scenes: pedestrian crossings and distant intersections</summary><div class="qualitative-grid"><figure class="paper-figure " ><a class="figure-zoom" href="assets/media/figures/qualitative-crossing.webp" data-zoom data-title="Pedestrian crossing comparison" target="_blank" rel="noopener" aria-label="Enlarge: Pedestrian crossing comparison"><img src="assets/media/figures/qualitative-crossing-preview.webp" alt="Supplementary scene with ground truth and predicted Lane Field channels, surround-view camera images, and the ground truth, baseline, and enhanced HD maps." width="1440" height="1810" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Pedestrian crossing.</strong> The baseline misses a crossing and makes inaccurate local predictions; Lane Field conditioning recovers the crossing and improves the map structure in this example.</figcaption></figure><figure class="paper-figure " ><a class="figure-zoom" href="assets/media/figures/qualitative-intersection.webp" data-zoom data-title="Distant intersection comparison" target="_blank" rel="noopener" aria-label="Enlarge: Distant intersection comparison"><img src="assets/media/figures/qualitative-intersection-preview.webp" alt="Supplementary scene comparing Lane Field channel predictions and HD maps around a distant intersection." width="1440" height="1796" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Distant intersection.</strong> The enhanced variant preserves the intersection structure more accurately. The upper panels compare predicted and ground-truth Lane Field channels.</figcaption></figure></div></details><details class="analysis-details"><summary>Failure cases: roundabouts and missed crossings</summary><div class="qualitative-grid"><figure class="paper-figure " ><a class="figure-zoom" href="assets/media/figures/failure-roundabout.webp" data-zoom data-title="Roundabout failure case" target="_blank" rel="noopener" aria-label="Enlarge: Roundabout failure case"><img src="assets/media/figures/failure-roundabout-preview.webp" alt="Roundabout example with Lane Field channels, camera views, and HD maps showing errors in both the baseline and enhanced variant." width="1440" height="1848" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Roundabout.</strong> Both methods struggle in this rare dataset scenario, although the enhanced variant shows somewhat better awareness of the overall lane structure.</figcaption></figure><figure class="paper-figure " ><a class="figure-zoom" href="assets/media/figures/failure-crossing.webp" data-zoom data-title="Missed crossing failure case" target="_blank" rel="noopener" aria-label="Enlarge: Missed crossing failure case"><img src="assets/media/figures/failure-crossing-preview.webp" alt="Challenging scene in which the Lane Field enhanced model improves lane structure but still misses a pedestrian crossing." width="1440" height="1691" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Missed crossing.</strong> Lane Field does not explicitly encode pedestrian crossing regions, so the model can still miss crossings in challenging scenes.</figcaption></figure></div></details>
+        <h3 class="subsection-title" id="attention-analysis">Where the decoder samples</h3><p>Compare the learned sampling offsets with the Lane Field guided offsets in the last decoder layer. Guidance stretches the pattern along reliable lane directions and is suppressed where the direction is ambiguous or the prediction is uncertain.</p><div class="visual-explorer" data-explorer="attention" data-media-slot="attention-visualization"><fieldset class="explorer-controls" hidden><legend>Scene</legend><div class="explorer-options"><label><input type="radio" name="attention" value="road" aria-controls="attention-road" checked><span>On the road</span></label><label><input type="radio" name="attention" value="intersection" aria-controls="attention-intersection" ><span>Intersection</span></label><label><input type="radio" name="attention" value="uncertain" aria-controls="attention-uncertain" ><span>High uncertainty</span></label></div></fieldset><figure class="explorer-panel" id="attention-road" data-panel="road"><div class="panel-grid panel-grid--three"><div class="visual-panel"><p class="panel-label">Original sampling</p><a class="figure-zoom" href="assets/media/figures/attention-road-original.webp" data-zoom data-title="Original sampling" target="_blank" rel="noopener" aria-label="Enlarge: Original sampling"><img src="assets/media/figures/attention-road-original.webp" alt="On the road: original sampling locations around the reference point." width="872" height="550" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Guided sampling</p><a class="figure-zoom" href="assets/media/figures/attention-road-guided.webp" data-zoom data-title="Guided sampling" target="_blank" rel="noopener" aria-label="Enlarge: Guided sampling"><img src="assets/media/figures/attention-road-guided.webp" alt="On the road: sampling locations after Lane Field guidance." width="872" height="550" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Overlay</p><a class="figure-zoom" href="assets/media/figures/attention-road-overlay.webp" data-zoom data-title="Overlay" target="_blank" rel="noopener" aria-label="Enlarge: Overlay"><img src="assets/media/figures/attention-road-overlay.webp" alt="On the road: comparison of original and guided sampling offsets." width="872" height="550" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>On the road.</strong> At a road-supported reference point, the guided pattern stretches along the lane and its principal axis becomes better aligned with the local direction.</figcaption></figure><figure class="explorer-panel" id="attention-intersection" data-panel="intersection"><div class="panel-grid panel-grid--three"><div class="visual-panel"><p class="panel-label">Original sampling</p><a class="figure-zoom" href="assets/media/figures/attention-intersection-original.webp" data-zoom data-title="Original sampling" target="_blank" rel="noopener" aria-label="Enlarge: Original sampling"><img src="assets/media/figures/attention-intersection-original.webp" alt="At an intersection: original sampling locations around the reference point." width="756" height="547" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Guided sampling</p><a class="figure-zoom" href="assets/media/figures/attention-intersection-guided.webp" data-zoom data-title="Guided sampling" target="_blank" rel="noopener" aria-label="Enlarge: Guided sampling"><img src="assets/media/figures/attention-intersection-guided.webp" alt="At an intersection: sampling locations after Lane Field guidance." width="756" height="547" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Overlay</p><a class="figure-zoom" href="assets/media/figures/attention-intersection-overlay.webp" data-zoom data-title="Overlay" target="_blank" rel="noopener" aria-label="Enlarge: Overlay"><img src="assets/media/figures/attention-intersection-overlay.webp" alt="At an intersection: comparison of original and guided sampling offsets." width="756" height="547" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>At an intersection.</strong> At the intersection, directional confidence is close to zero. The confidence gate suppresses the guidance, keeping the pattern close to the learned offsets.</figcaption></figure><figure class="explorer-panel" id="attention-uncertain" data-panel="uncertain"><div class="panel-grid panel-grid--three"><div class="visual-panel"><p class="panel-label">Original sampling</p><a class="figure-zoom" href="assets/media/figures/attention-uncertain-original.webp" data-zoom data-title="Original sampling" target="_blank" rel="noopener" aria-label="Enlarge: Original sampling"><img src="assets/media/figures/attention-uncertain-original.webp" alt="High uncertainty: original sampling locations around the reference point." width="745" height="551" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Guided sampling</p><a class="figure-zoom" href="assets/media/figures/attention-uncertain-guided.webp" data-zoom data-title="Guided sampling" target="_blank" rel="noopener" aria-label="Enlarge: Guided sampling"><img src="assets/media/figures/attention-uncertain-guided.webp" alt="High uncertainty: sampling locations after Lane Field guidance." width="745" height="551" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Reliable regions</p><a class="figure-zoom" href="assets/media/figures/attention-uncertain-reliable.webp" data-zoom data-title="Reliable regions" target="_blank" rel="noopener" aria-label="Enlarge: Reliable regions"><img src="assets/media/figures/attention-uncertain-reliable.webp" alt="High uncertainty: reliable areas highlighted in red by the uncertainty gate." width="745" height="551" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>High uncertainty.</strong> High predicted variance suppresses the guidance through the uncertainty gate. Red areas in the third panel mark the regions considered reliable by that gate.</figcaption></figure><p class="explorer-status sr-only" role="status"></p></div><p class="table-note">These examples use an attention head whose learned head gate converges close to one, as described in the supplementary analysis.</p><details class="analysis-details"><summary>Attention measurements across 1,000 validation samples</summary><p class="analysis-intro">Original Lane Attention (orange) and guided attention (red), averaged across heads. The values below are the aggregate measurements reported in the supplementary table.</p><div class="visual-explorer" data-explorer="attention-metrics" ><fieldset class="explorer-controls" hidden><legend>Measurement</legend><div class="explorer-options"><label><input type="radio" name="attention-metrics" value="alignment" aria-controls="attention-metrics-alignment" checked><span>Alignment error</span></label><label><input type="radio" name="attention-metrics" value="anisotropy" aria-controls="attention-metrics-anisotropy" ><span>Anisotropy</span></label><label><input type="radio" name="attention-metrics" value="area" aria-controls="attention-metrics-area" ><span>Spatial coverage</span></label></div></fieldset><figure class="explorer-panel" id="attention-metrics-alignment" data-panel="alignment"><div class="metric-readout"><span>Lane Attention <strong>35.3°</strong></span><span class="metric-arrow" aria-hidden="true"><svg viewBox="0 0 28 20" focusable="false"><path d="M3 10h21m-6-6 6 6-6 6"/></svg></span><span>Guided attention <strong>11.4°</strong></span></div><a class="figure-zoom" href="assets/media/figures/attention-alignment.webp" data-zoom data-title="Alignment error" target="_blank" rel="noopener" aria-label="Enlarge: Alignment error"><img src="assets/media/figures/attention-alignment-preview.webp" alt="Alignment error: original plot comparing original Lane Attention in orange and guided attention in red across validation samples." width="1440" height="509" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Alignment error.</strong> Angular error between the principal sampling axis and the ground-truth lane direction. Lower is better.</figcaption></figure><figure class="explorer-panel" id="attention-metrics-anisotropy" data-panel="anisotropy"><div class="metric-readout"><span>Lane Attention <strong>13%</strong></span><span class="metric-arrow" aria-hidden="true"><svg viewBox="0 0 28 20" focusable="false"><path d="M3 10h21m-6-6 6 6-6 6"/></svg></span><span>Guided attention <strong>62%</strong></span></div><a class="figure-zoom" href="assets/media/figures/attention-anisotropy.webp" data-zoom data-title="Anisotropy" target="_blank" rel="noopener" aria-label="Enlarge: Anisotropy"><img src="assets/media/figures/attention-anisotropy-preview.webp" alt="Anisotropy: original plot comparing original Lane Attention in orange and guided attention in red across validation samples." width="1440" height="509" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Anisotropy.</strong> The guided sampling pattern is more elongated along the lane direction.</figcaption></figure><figure class="explorer-panel" id="attention-metrics-area" data-panel="area"><div class="metric-readout"><span>Lane Attention <strong>33.2 m²</strong></span><span class="metric-arrow" aria-hidden="true"><svg viewBox="0 0 28 20" focusable="false"><path d="M3 10h21m-6-6 6 6-6 6"/></svg></span><span>Guided attention <strong>78.2 m²</strong></span></div><a class="figure-zoom" href="assets/media/figures/attention-area.webp" data-zoom data-title="Spatial coverage" target="_blank" rel="noopener" aria-label="Enlarge: Spatial coverage"><img src="assets/media/figures/attention-area-preview.webp" alt="Spatial coverage: original plot comparing original Lane Attention in orange and guided attention in red across validation samples." width="1440" height="509" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Spatial coverage.</strong> Average area covered by sampling locations per reference point.</figcaption></figure><p class="explorer-status sr-only" role="status"></p></div></details><h3 class="subsection-title" id="uncertainty-analysis">Knowing when the field is uncertain</h3><p>Predicted proximity can extend into regions that are not annotated as lanes. The predicted variance provides a separate reliability cue, allowing the downstream modules to reduce their reliance on uncertain geometry.</p><div class="visual-explorer" data-explorer="uncertainty" data-media-slot="field-uncertainty"><fieldset class="explorer-controls" hidden><legend>Scene</legend><div class="explorer-options"><label><input type="radio" name="uncertainty" value="driveway" aria-controls="uncertainty-driveway" checked><span>Driveway</span></label><label><input type="radio" name="uncertainty" value="parking" aria-controls="uncertainty-parking" ><span>Parking entrance</span></label><label><input type="radio" name="uncertainty" value="free-space" aria-controls="uncertainty-free-space" ><span>Free space</span></label></div></fieldset><figure class="explorer-panel" id="uncertainty-driveway" data-panel="driveway"><div class="panel-grid panel-grid--three"><div class="visual-panel"><p class="panel-label">Ground-truth proximity</p><a class="figure-zoom" href="assets/media/figures/uncertainty-driveway-gt.webp" data-zoom data-title="Ground-truth proximity" target="_blank" rel="noopener" aria-label="Enlarge: Ground-truth proximity"><img src="assets/media/figures/uncertainty-driveway-gt-preview.webp" alt="Driveway: ground-truth proximity projected onto the camera image." width="950" height="715" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Predicted proximity</p><a class="figure-zoom" href="assets/media/figures/uncertainty-driveway-pred.webp" data-zoom data-title="Predicted proximity" target="_blank" rel="noopener" aria-label="Enlarge: Predicted proximity"><img src="assets/media/figures/uncertainty-driveway-pred-preview.webp" alt="Driveway: predicted proximity projected onto the camera image." width="950" height="715" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Predicted variance</p><a class="figure-zoom" href="assets/media/figures/uncertainty-driveway-variance.webp" data-zoom data-title="Predicted variance" target="_blank" rel="noopener" aria-label="Enlarge: Predicted variance"><img src="assets/media/figures/uncertainty-driveway-variance-preview.webp" alt="Driveway: predicted variance projected onto the camera image." width="950" height="715" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>Driveway.</strong> The driveway is not annotated in the ground truth. The model predicts both high proximity and high variance there, indicating uncertainty.</figcaption></figure><figure class="explorer-panel" id="uncertainty-parking" data-panel="parking"><div class="panel-grid panel-grid--three"><div class="visual-panel"><p class="panel-label">Ground-truth proximity</p><a class="figure-zoom" href="assets/media/figures/uncertainty-parking-gt.webp" data-zoom data-title="Ground-truth proximity" target="_blank" rel="noopener" aria-label="Enlarge: Ground-truth proximity"><img src="assets/media/figures/uncertainty-parking-gt-preview.webp" alt="Parking entrance: ground-truth proximity projected onto the camera image." width="960" height="727" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Predicted proximity</p><a class="figure-zoom" href="assets/media/figures/uncertainty-parking-pred.webp" data-zoom data-title="Predicted proximity" target="_blank" rel="noopener" aria-label="Enlarge: Predicted proximity"><img src="assets/media/figures/uncertainty-parking-pred-preview.webp" alt="Parking entrance: predicted proximity projected onto the camera image." width="960" height="727" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Predicted variance</p><a class="figure-zoom" href="assets/media/figures/uncertainty-parking-variance.webp" data-zoom data-title="Predicted variance" target="_blank" rel="noopener" aria-label="Enlarge: Predicted variance"><img src="assets/media/figures/uncertainty-parking-variance-preview.webp" alt="Parking entrance: predicted variance projected onto the camera image." width="960" height="726" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>Parking entrance.</strong> The parking entrance is unannotated. High variance accompanies the proximity prediction in that region and can reduce the strength of the guidance.</figcaption></figure><figure class="explorer-panel" id="uncertainty-free-space" data-panel="free-space"><div class="panel-grid panel-grid--three"><div class="visual-panel"><p class="panel-label">Ground-truth proximity</p><a class="figure-zoom" href="assets/media/figures/uncertainty-free-space-gt.webp" data-zoom data-title="Ground-truth proximity" target="_blank" rel="noopener" aria-label="Enlarge: Ground-truth proximity"><img src="assets/media/figures/uncertainty-free-space-gt-preview.webp" alt="Ambiguous free space: ground-truth proximity projected onto the camera image." width="950" height="715" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Predicted proximity</p><a class="figure-zoom" href="assets/media/figures/uncertainty-free-space-pred.webp" data-zoom data-title="Predicted proximity" target="_blank" rel="noopener" aria-label="Enlarge: Predicted proximity"><img src="assets/media/figures/uncertainty-free-space-pred-preview.webp" alt="Ambiguous free space: predicted proximity projected onto the camera image." width="950" height="715" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div><div class="visual-panel"><p class="panel-label">Predicted variance</p><a class="figure-zoom" href="assets/media/figures/uncertainty-free-space-variance.webp" data-zoom data-title="Predicted variance" target="_blank" rel="noopener" aria-label="Enlarge: Predicted variance"><img src="assets/media/figures/uncertainty-free-space-variance-preview.webp" alt="Ambiguous free space: predicted variance projected onto the camera image." width="950" height="715" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a></div></div><figcaption><strong>Ambiguous free space.</strong> The model assigns high variance to an ambiguous region outside the annotated lanes, where the observed space may appear drivable.</figcaption></figure><p class="explorer-status sr-only" role="status"></p></div>
+      </div>
+    </section>
+
+    <section class="paper-section" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <h2 id="results-title">Experimental results</h2>
+        <p>On <strong>OpenLane-V2 subset A</strong>, adding both modules increases LaneSegNet’s lane segment mAP from <strong>32.1 to 36.1</strong> (+4.0 points, or +12.5% relative). The following tables report the comparisons and ablations from the paper, including experiments on Argoverse 2 and nuScenes.</p>
+        <nav class="results-nav" aria-label="Results tables">
+          <a href="#openlane-results">OpenLane-V2</a>
+          <a href="#component-ablation">Component ablation</a>
+          <a href="#sd-map-results">SD map priors</a>
+          <a href="#additional-datasets">Additional datasets</a>
+        </nav>
+        <p class="table-reading-note">↑ Higher is better. Values in parentheses are absolute gains over the corresponding baseline; Δ<sub>rel</sub> reports relative gains.</p>
+        <p class="table-scroll-hint">Swipe or scroll horizontally to view all table columns.</p>
+
+        <h3 class="subsection-title" id="openlane-results">Comparison on OpenLane-V2</h3>
+        <p>Lane segment and centerline perception on subset A. All models in this comparison use a ResNet-50 backbone and are trained for 24 epochs.</p>
+        <div class="table-scroll" role="region" aria-labelledby="lane-segment-caption" tabindex="0">
+          <table class="results-table" id="table-1a" aria-describedby="openlane-table-notes">
+            <caption id="lane-segment-caption"><strong>Table 1(a).</strong> Lane segment perception on OpenLane-V2 subset A.</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col">mAP ↑</th><th scope="col">AP<sub>ls</sub> ↑</th><th scope="col">AP<sub>ped</sub> ↑</th><th scope="col">TOP<sub>lsls</sub> ↑</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">StreamMapNet <sup>‡</sup></th><td>20.3</td><td>22.1</td><td>18.6</td><td>13.2</td></tr>
+              <tr><th scope="row">TopoNet</th><td>23.0</td><td>23.9</td><td>22.0</td><td>–</td></tr>
+              <tr><th scope="row">SQD-MapNet <sup>‡</sup></th><td>26.0</td><td>27.1</td><td>24.9</td><td>16.6</td></tr>
+              <tr><th scope="row">MapTR</th><td>27.0</td><td>25.9</td><td>28.1</td><td>–</td></tr>
+              <tr><th scope="row">MapTRv2</th><td>28.5</td><td>26.6</td><td>30.4</td><td>–</td></tr>
+              <tr><th scope="row">LaneSegNet <sup>†</sup></th><td>32.1</td><td>32.2</td><td>31.9</td><td>25.5</td></tr>
+              <tr><th scope="row">TopoLogic</th><td>33.2</td><td>33.0</td><td>33.4</td><td><strong>30.8</strong></td></tr>
+              <tr><th scope="row">Topo2Seq</th><td><span class="second-best">33.6</span></td><td><span class="second-best">33.7</span></td><td><span class="second-best">33.5</span></td><td>26.9</td></tr>
+              <tr class="highlight-row"><th scope="row">LaneSegNet + Ours</th><td><strong>36.1</strong><small>(+4.0)</small></td><td><strong>35.8</strong><small>(+3.6)</small></td><td><strong>36.4</strong><small>(+4.5)</small></td><td><span class="second-best">28.4</span><small>(+2.9)</small></td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th scope="row">Δ<sub>rel</sub> vs. LaneSegNet</th><td>+12.5%</td><td>+11.2%</td><td>+14.1%</td><td>+11.4%</td></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="table-scroll" role="region" aria-labelledby="centerline-caption" tabindex="0">
+          <table class="results-table" id="table-1b" aria-describedby="openlane-table-notes">
+            <caption id="centerline-caption"><strong>Table 1(b).</strong> Centerline perception on OpenLane-V2 subset A. OLS<sub>l</sub> uses only centerline detection and lane-lane topology.</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col">DET<sub>l</sub> ↑</th><th scope="col">TOP<sub>ll</sub> ↑</th><th scope="col">OLS<sub>l</sub> ↑</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">MapTR</th><td>17.7</td><td>5.9</td><td>21.0</td></tr>
+              <tr><th scope="row">TopoNet</th><td>28.6</td><td>10.9</td><td>30.8</td></tr>
+              <tr><th scope="row">TopoMLP</th><td>28.3</td><td>21.6</td><td>37.4</td></tr>
+              <tr><th scope="row">TopoLogic</th><td>29.9</td><td>23.9</td><td>39.4</td></tr>
+              <tr><th scope="row">LaneSegNet <sup>†</sup></th><td>31.1</td><td>25.0</td><td>40.6</td></tr>
+              <tr><th scope="row">TopoFormer <sup>*</sup></th><td><span class="second-best">34.7</span></td><td>24.1</td><td>41.9</td></tr>
+              <tr><th scope="row">TopoPoint <sup>†</sup></th><td>31.1</td><td><span class="second-best">28.5</span></td><td>42.2</td></tr>
+              <tr><th scope="row">Topo2Seq</th><td>33.5</td><td>27.0</td><td>42.7</td></tr>
+              <tr class="highlight-row"><th scope="row">LaneSegNet + Ours</th><td><strong>35.2</strong><small>(+4.1)</small></td><td>28.0<small>(+3.0)</small></td><td><strong>44.1</strong><small>(+3.5)</small></td></tr>
+              <tr class="highlight-row"><th scope="row">TopoPoint + Ours</th><td>32.8<small>(+1.7)</small></td><td><strong>30.0</strong><small>(+1.5)</small></td><td><span class="second-best">43.8</span><small>(+1.6)</small></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note" id="openlane-table-notes"><strong>Bold</strong> and <span class="second-best">underlined</span> values indicate the best and second-best results, respectively, in each comparison. † Baseline trained from the official public implementation. ‡ Uses temporal information. * TopoFormer uses a pre-trained lane detector. “–” indicates no reported result.</p>
+
+        <details class="analysis-details result-detail" id="component-ablation"><summary>Component-wise ablation <span>Table 2</span></summary>
+
+        <p>BEV feature modulation and deformable attention guidance each improve the baseline. Combining them provides the strongest results across all four metrics.</p>
+        <div class="table-scroll" role="region" aria-labelledby="ablation-caption" tabindex="0">
+          <table class="results-table" id="table-2">
+            <caption id="ablation-caption"><strong>Table 2.</strong> Component-wise ablation on OpenLane-V2 with LaneSegNet.</caption>
+            <thead><tr><th scope="col">Configuration</th><th scope="col">mAP ↑</th><th scope="col">AP<sub>ls</sub> ↑</th><th scope="col">AP<sub>ped</sub> ↑</th><th scope="col">TOP<sub>lsls</sub> ↑</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">LaneSegNet (baseline)</th><td>32.1</td><td>32.2</td><td>31.9</td><td>25.5</td></tr>
+              <tr><th scope="row">+ Attention guidance</th><td>33.2<small>(+1.1)</small></td><td>33.4<small>(+1.2)</small></td><td>32.9<small>(+1.0)</small></td><td>26.8<small>(+1.3)</small></td></tr>
+              <tr><th scope="row">+ Feature modulation</th><td>34.9<small>(+2.8)</small></td><td>35.7<small>(+3.5)</small></td><td>34.0<small>(+2.1)</small></td><td>27.9<small>(+2.4)</small></td></tr>
+              <tr class="highlight-row"><th scope="row">+ Both (ours)</th><td><strong>36.1</strong><small>(+4.0)</small></td><td><strong>35.8</strong><small>(+3.6)</small></td><td><strong>36.4</strong><small>(+4.5)</small></td><td><strong>28.4</strong><small>(+2.9)</small></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        </details>
+        <details class="analysis-details result-detail" id="sd-map-results"><summary>Lane Fields from SD map priors <span>Table 3</span></summary>
+
+        <p>Lane Fields can also be constructed from the road polylines in standard-definition maps. Using the SD maps included in OpenLane-V2 improves both perception and topology over the LaneSegNet baseline.</p>
+        <div class="table-scroll" role="region" aria-labelledby="sd-map-caption" tabindex="0">
+          <table class="results-table" id="table-3">
+            <caption id="sd-map-caption"><strong>Table 3.</strong> LaneSegNet with Lane Fields derived from SD maps on OpenLane-V2.</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col">mAP ↑</th><th scope="col">AP<sub>ls</sub> ↑</th><th scope="col">AP<sub>ped</sub> ↑</th><th scope="col">TOP<sub>lsls</sub> ↑</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">LaneSegNet</th><td>32.1</td><td>32.2</td><td>31.9</td><td>25.5</td></tr>
+              <tr class="highlight-row"><th scope="row">+ Ours (SD)</th><td><strong>36.8</strong><small>(+4.7)</small></td><td><strong>36.6</strong><small>(+4.4)</small></td><td><strong>37.0</strong><small>(+5.1)</small></td><td><strong>29.7</strong><small>(+4.2)</small></td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th scope="row">Δ<sub>rel</sub> vs. LaneSegNet</th><td>+14.6%</td><td>+13.7%</td><td>+16.0%</td><td>+16.5%</td></tr>
+            </tfoot>
+          </table>
+        </div>
+
+        </details>
+        <details class="analysis-details result-detail" id="additional-datasets"><summary>Generalization across datasets and methods <span>Table 4</span></summary>
+
+        <p>We integrate Lane Field into MapTRv2 and GeMap for map element detection on Argoverse 2 and nuScenes, covering lane dividers, pedestrian crossings, road boundaries, and centerlines.</p>
+        <div class="table-scroll" role="region" aria-labelledby="datasets-caption" tabindex="0">
+          <table class="results-table dataset-table" id="table-4" aria-describedby="datasets-table-notes">
+            <caption id="datasets-caption"><strong>Table 4.</strong> Map element detection on Argoverse 2 (AV2) and nuScenes (NUS). Bold values highlight the Lane Field enhanced variants within each baseline pair.</caption>
+            <thead><tr><th scope="col">Dataset</th><th scope="col">Method</th><th scope="col">mAP ↑</th><th scope="col">AP<sub>div</sub> ↑</th><th scope="col">AP<sub>ped</sub> ↑</th><th scope="col">AP<sub>bou</sub> ↑</th><th scope="col">AP<sub>cen</sub> ↑</th></tr></thead>
+            <tbody>
+              <tr><th scope="rowgroup" rowspan="4" class="dataset-label">Argoverse 2<span>AV2</span></th><th scope="row">MapTRv2</th><td>62.0</td><td>66.3</td><td>54.8</td><td>64.6</td><td>62.0</td></tr>
+              <tr class="highlight-row"><th scope="row">+ Ours</th><td><strong>64.2</strong></td><td><strong>69.5</strong></td><td><strong>56.4</strong></td><td><strong>67.1</strong></td><td><strong>63.6</strong></td></tr>
+              <tr class="method-group-start"><th scope="row">GeMap</th><td>70.3</td><td>74.6</td><td>66.7</td><td>69.5</td><td>–</td></tr>
+              <tr class="highlight-row"><th scope="row">+ Ours</th><td><strong>71.2</strong></td><td><strong>75.3</strong></td><td><strong>67.4</strong></td><td><strong>70.8</strong></td><td>–</td></tr>
+            </tbody>
+            <tbody>
+              <tr><th scope="rowgroup" rowspan="2" class="dataset-label">nuScenes<span>NUS</span></th><th scope="row">MapTRv2</th><td>55.8</td><td>55.9</td><td>52.5</td><td>60.1</td><td>54.9</td></tr>
+              <tr class="highlight-row"><th scope="row">+ Ours</th><td><strong>57.7</strong></td><td><strong>59.2</strong></td><td><strong>52.9</strong></td><td><strong>62.8</strong></td><td><strong>55.8</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note" id="datasets-table-notes">AP<sub>div</sub>: lane dividers; AP<sub>ped</sub>: pedestrian crossings; AP<sub>bou</sub>: road boundaries; AP<sub>cen</sub>: centerlines. “–” indicates no reported result. On Argoverse 2, MapTRv2 is trained for 6 epochs and GeMap for 12; on nuScenes, MapTRv2 is trained for 24 epochs.</p>
+
+        </details>
+      </div>
+    </section>
+
+    <section class="paper-section resources-section" id="resources" aria-labelledby="resources-title">
+      <div class="container reading-width">
+        <h2 id="resources-title">Resources</h2>
+        <dl class="resource-list">
+
+
+          <div><dt>Code & models</dt><dd class="resource-pending">Coming soon.</dd></div>
+        </dl>
+        <div class="citation" id="citation">
+          <div class="citation-heading"><h3>BibTeX</h3><button type="button" class="copy-button" id="copy-citation" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="10" height="11" rx="2"/><path d="M12 7V3H3v10h4"/></svg><span>Copy BibTeX</span></button></div>
+          <pre aria-label="BibTeX citation, to be added"><code id="bibtex"></code></pre>
+          <p class="citation-status sr-only" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper-section contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-width">
+        <h2 id="contact-title">Contact</h2>
+        <p class="contact-intro">For questions about this work or research collaborations, use the form below to contact Andrea Bertogalli.</p>
+        <form class="contact-form" id="contact-form">
+          <div class="form-row"><div><label for="name">Name</label><input id="name" name="name" autocomplete="name" maxlength="100" required></div><div><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" maxlength="254" required></div></div>
+          <label for="topic">Subject</label><select name="topic" id="topic"><option value="Question about the paper">Question about the paper</option><option value="Research collaboration">Research collaboration</option><option value="Code and models">Code and models</option><option value="Other inquiry">Other inquiry</option></select>
+          <label for="message">Message</label><textarea id="message" name="message" rows="5" minlength="10" maxlength="4000" required></textarea>
+          <div class="form-submit"><p>Opens a draft in your email app.<br>You review and send the message.</p><button class="resource-button primary" type="submit">Compose email <span aria-hidden="true">↗</span></button></div>
+          <p class="form-status" id="form-status" role="status"></p>
+          <noscript><p>Enable JavaScript to use the contact form.</p></noscript>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><p>Learning Lane-Structured Conditioning Fields for Online HD Mapping<br><span>WACV 2027 · Orlando, Florida</span></p><a href="#top">Back to top ↑</a></div></footer>
+
+  <dialog class="figure-dialog" id="figure-dialog" aria-labelledby="figure-dialog-title" aria-describedby="figure-dialog-caption">
+    <div class="dialog-heading"><span id="figure-dialog-title">Research figure</span><div class="dialog-actions"><a id="figure-original" href="assets/media/figures/framework.webp" target="_blank" rel="noopener">Open original ↗</a><button type="button" id="close-figure" aria-label="Close enlarged figure">Close <span aria-hidden="true">×</span></button></div></div>
+    <img id="figure-dialog-image" alt="Enlarged research figure" hidden>
+    <p id="figure-dialog-caption"></p>
+  </dialog>
+</body>
+</html>
