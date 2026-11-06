@@ -22,7 +22,7 @@
   <meta name="citation_publication_date" content="2027">
 
   <title>Lane Field — Learning Lane-Structured Conditioning Fields · WACV 2027</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg?v=palm" type="image/svg+xml" sizes="any">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
   <script src="field-lab.js" defer></script>
@@ -74,7 +74,7 @@
 
 
         <a class="resource-button primary" href="#gaussian-spread">Explore the field <span aria-hidden="true">↗</span></a>
-        <a class="resource-button" href="#overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Videos</a>
+        <a class="resource-button" href="#video-overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Videos</a>
         <a class="resource-button" href="#citation"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5H3v5h4V5Zm0 5c0 3-1 5-4 5M17 5h-4v5h4V5Zm0 5c0 3-1 5-4 5"/></svg>BibTeX</a>
         <span class="resource-button unavailable"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 5-4 5 4 5m8-10 4 5-4 5M12 3 8 17"/></svg>Code <small>coming soon</small></span>
       </div>
@@ -93,11 +93,17 @@
       <div class="container">
         <h2 id="overview-title">Overview</h2>
         <p class="section-intro">A dense field for <strong>proximity, orientation and confidence</strong>. Lane Field turns local lane geometry into a conditioning signal for BEV features and deformable attention.</p>
+        <figure class="video-figure" id="video-overview">
+          <div class="video-frame"><video id="explainer-video" controls playsinline preload="none" width="1920" height="1080" poster="assets/media/lane-field-explainer-poster.jpg" aria-label="Lane Field video overview: construction of the geometric representation and its use in online HD mapping"><source src="assets/media/lane-field-explainer.mp4" type="video/mp4"><p>Your browser does not support video. <a href="assets/media/lane-field-explainer.mp4">Download the Lane Field video overview</a>.</p></video></div>
+          <figcaption><strong>Video 1.</strong> A visual introduction to Lane Field: from lane geometry to a dense representation for online HD mapping.</figcaption>
+          <div class="media-links"><span>1:57 &nbsp;·&nbsp; No audio</span><a href="assets/media/lane-field-explainer.mp4" download>Download video <span aria-hidden="true">↓</span></a></div>
+          <p class="video-error" role="status" hidden></p>
+        </figure>
         <div class="overview-media">
         <figure class="paper-figure representation-figure" ><a class="figure-zoom" href="assets/media/figures/representation.webp" data-zoom data-title="Dense and geometric Lane Field representation" target="_blank" rel="noopener" aria-label="Enlarge: Dense and geometric Lane Field representation"><img src="assets/media/figures/representation-preview.webp" alt="Comparison of a dense raster map, sparse vector geometry, and the Lane Field channels for proximity, local direction, and confidence." width="1440" height="907" loading="lazy" decoding="async"><span class="zoom-hint"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg>Enlarge</span></a><figcaption><strong>Figure 1.</strong> Lane Field combines the geometric meaning of vectorized maps with a dense, BEV-aligned spatial structure.</figcaption></figure>
         <figure class="video-figure" id="demos">
           <div class="video-frame"><video id="research-video" controls playsinline preload="none" poster="assets/media/hd-map-poster.jpg" aria-label="HD map reconstruction from surround-view camera observations, with predicted Lane Fields and vectorized map geometry"><source src="assets/media/hd-map.mp4" type="video/mp4"><p>Your browser does not support video. <a href="assets/media/hd-map.mp4">Download the HD map demonstration</a>.</p></video></div>
-          <figcaption><strong>Video 1.</strong> Online HD map reconstruction on OpenLane-V2. Surround-view camera observations are shown alongside the predicted Lane Field and vectorized map geometry.</figcaption>
+          <figcaption><strong>Video 2.</strong> Online HD map reconstruction on OpenLane-V2. Surround-view camera observations are shown alongside the predicted Lane Field and vectorized map geometry.</figcaption>
           <div class="media-links"><span>0:59 &nbsp;·&nbsp; No audio</span><a href="assets/media/hd-map.mp4" download>Download video <span aria-hidden="true">↓</span></a></div>
           <p class="video-error" role="status" hidden></p>
         </figure>
@@ -117,7 +123,7 @@
         <p>The representation describes <strong>proximity</strong>, <strong>local lane direction</strong>, and <strong>directional confidence</strong> across the BEV grid. The following video shows predicted fields across driving scenes.</p>
         <figure class="video-figure field-video-figure">
           <div class="video-frame"><video id="field-video" controls playsinline preload="none" poster="assets/media/field-poster.jpg" aria-label="Lane Field prediction across driving scenes, showing dense geometric fields alongside camera observations and the local map"><source src="assets/media/field-prediction.mp4" type="video/mp4"><p>Your browser does not support video. <a href="assets/media/field-prediction.mp4">Download the Lane Field demonstration</a>.</p></video></div>
-          <figcaption><strong>Video 2.</strong> Lane Field predictions across driving scenes. The visualizations show dense geometric structure in relation to image observations and the local road map.</figcaption>
+          <figcaption><strong>Video 3.</strong> Lane Field predictions across driving scenes. The visualizations show dense geometric structure in relation to image observations and the local road map.</figcaption>
           <div class="media-links"><span>3:56 &nbsp;·&nbsp; No audio</span><a href="assets/media/field-prediction.mp4" download>Download video <span aria-hidden="true">↓</span></a></div>
           <p class="video-error" role="status" hidden></p>
         </figure>

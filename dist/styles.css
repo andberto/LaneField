@@ -383,6 +383,8 @@ h2 { margin-bottom: 18px; font-size: 27px; }
 .subsection-title, #visualizations .subsection-title:not(:first-child) { margin-top: 30px; margin-bottom: 10px; }
 .abstract-text { line-height: 1.8; font-size: 14px; }
 .overview-media { display: grid; grid-template-columns: .9fr 1.1fr; align-items: start; gap: 24px; }
+#video-overview { margin-bottom: 28px; }
+#explainer-video { aspect-ratio: 16 / 9; }
 .overview-media > figure { min-width: 0; margin: 0; }
 .overview-media .figure-zoom { padding: 12px; }
 .overview-media .video-frame { margin-top: 0; }
