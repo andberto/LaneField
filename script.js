@@ -38,7 +38,7 @@ document.addEventListener('keydown', event => {
 });
 window.matchMedia('(min-width: 901px)').addEventListener('change', event => { if (event.matches) closeMenu(); });
 
-// Keep both demonstrations visible; load media only when the visitor plays it.
+// Play one video at a time; load media only when the visitor plays it.
 const videos = [...document.querySelectorAll('video')];
 videos.forEach(video => {
   video.addEventListener('play', () => videos.forEach(other => { if (other !== video) other.pause(); }));
