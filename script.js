@@ -100,29 +100,32 @@ figureDialog.addEventListener('close', () => {
   figureTrigger?.focus({ preventScroll: true });
 });
 
-const copyButton = document.querySelector('#copy-citation');
-copyButton.disabled = !document.querySelector('#bibtex').textContent.trim();
-let copyReset;
-copyButton.addEventListener('click', async () => {
-  const citation = document.querySelector('#bibtex').textContent;
-  if (!citation.trim()) return;
-  let copied = false;
-  try { await navigator.clipboard.writeText(citation); copied = true; }
-  catch {
-    const field = document.createElement('textarea');
-    field.value = citation; field.style.position = 'fixed'; field.style.opacity = '0';
-    document.body.append(field); field.select();
-    try { copied = document.execCommand('copy'); } catch { copied = false; }
-    field.remove(); copyButton.focus();
-  }
-  clearTimeout(copyReset);
-  copyButton.querySelector('span').textContent = copied ? 'Copied!' : 'Select citation below';
-  document.querySelector('.citation-status').textContent = copied ? 'BibTeX copied to clipboard.' : 'Clipboard unavailable. Select and copy the citation below.';
-  if (!copied) {
-    const range = document.createRange(); range.selectNodeContents(document.querySelector('#bibtex'));
-    const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
-  }
-  copyReset = window.setTimeout(() => { copyButton.querySelector('span').textContent = 'Copy BibTeX'; }, 3000);
+document.querySelectorAll('.copy-button[data-citation]').forEach(copyButton => {
+  const citationCode = document.getElementById(copyButton.dataset.citation);
+  const citationStatus = copyButton.closest('.citation-card').querySelector('.citation-status');
+  copyButton.disabled = !citationCode.textContent.trim();
+  let copyReset;
+  copyButton.addEventListener('click', async () => {
+    const citation = citationCode.textContent;
+    if (!citation.trim()) return;
+    let copied = false;
+    try { await navigator.clipboard.writeText(citation); copied = true; }
+    catch {
+      const field = document.createElement('textarea');
+      field.value = citation; field.style.position = 'fixed'; field.style.opacity = '0';
+      document.body.append(field); field.select();
+      try { copied = document.execCommand('copy'); } catch { copied = false; }
+      field.remove(); copyButton.focus();
+    }
+    clearTimeout(copyReset);
+    copyButton.querySelector('span').textContent = copied ? 'Copied!' : 'Select citation below';
+    citationStatus.textContent = copied ? 'BibTeX copied to clipboard.' : 'Clipboard unavailable. Select and copy the citation below.';
+    if (!copied) {
+      const range = document.createRange(); range.selectNodeContents(citationCode);
+      const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+    }
+    copyReset = window.setTimeout(() => { copyButton.querySelector('span').textContent = 'Copy BibTeX'; }, 3000);
+  });
 });
 
 const contactForm = document.querySelector('#contact-form');

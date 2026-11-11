@@ -141,8 +141,12 @@ figcaption strong { color: #3b434c; }
 .file-type { display: inline-block; border: 1px solid #d5dce4; color: #788797; padding: 0 5px; border-radius: 3px; font-size: 9px; margin-left: 5px; vertical-align: middle; }
 .resource-pending { color: #7a8490; }
 .citation { margin-top: 38px; scroll-margin-top: 85px; }
+.citation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.citation-card { display: flex; flex-direction: column; min-width: 0; }
+.citation-card pre { flex: 1; white-space: pre-wrap; overflow-wrap: anywhere; }
 .citation-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 15px; }
 .citation-heading h3 { font-size: 22px; }
+.citation-heading .copy-button { flex-shrink: 0; }
 .copy-button { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #d7dde4; background: #fff; border-radius: 4px; font-size: 11px; }
 .copy-button:hover:not(:disabled) { background: #f1f4f7; }
 .copy-button:disabled { cursor: default; opacity: .45; }
@@ -498,6 +502,7 @@ figcaption { margin-top: 10px; font-size: 12px; line-height: 1.65; }
 .lab-range:focus-visible { outline: 2px solid #75a9d4; outline-offset: 0; border-radius: 4px; }
 @media (pointer: coarse) { .lab-range { --range-thumb: 24px; height: 44px; } }
 @media (max-width: 760px) {
+  .citation-grid { grid-template-columns: 1fr; }
   .overview-media { grid-template-columns: 1fr 1fr; gap: 16px; }
   .lab-body { grid-template-columns: 1fr; }
   .lab-map { border-right: 0; border-bottom: 1px solid #e2e9f0; padding: 16px; }
